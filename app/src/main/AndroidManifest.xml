@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LuuThaoGolfZon">
         <activity
+            android:name=".view.DetailImageActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>

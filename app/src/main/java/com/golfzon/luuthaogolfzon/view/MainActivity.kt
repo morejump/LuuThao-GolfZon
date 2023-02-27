@@ -1,5 +1,6 @@
 package com.golfzon.luuthaogolfzon.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,16 +12,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.golfzon.luuthaogolfzon.R
 import com.golfzon.luuthaogolfzon.utils.onTextChangeObservable
 import com.golfzon.luuthaogolfzon.viewmodel.ListViewModel
+import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemClickListener {
     val TAG = MainActivity::class.java.simpleName
     var isLoading = false
+    val REQUEST_CODE = 123
+
+    companion object {
+        val PHOTOS_KEY = "PHOTOS_KEY"
+        val POSITION_KEY = "POSITION_KEY"
+    }
+
     lateinit var viewModel: ListViewModel
-    private val photoListAdapter = PhotoListAdapter(arrayListOf())
+    private val photoListAdapter = PhotoListAdapter(arrayListOf(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +84,22 @@ class MainActivity : AppCompatActivity() {
         viewModel.photoLoadError.observe(this, Observer { isError ->
             listError.visibility = if (isError) View.VISIBLE else View.GONE
         })
+    }
+
+    override fun onItemClick(position: Int) {
+        val intent = Intent(this, DetailImageActivity::class.java)
+        intent.putExtra(POSITION_KEY, position)
+        intent.putExtra(PHOTOS_KEY, photoListAdapter.getAllPhotos())
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // Handle data from detail image activity
+            Log.i(TAG, "onActivityResult")
+        }
     }
 
 }

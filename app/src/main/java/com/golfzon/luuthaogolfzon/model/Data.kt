@@ -1,16 +1,12 @@
 package com.golfzon.luuthaogolfzon.model
 
-import com.google.gson.annotations.SerializedName
-
 data class PhotosResponse(
     val photos: List<Photo>
 )
+
 data class Photo(
-//    @SerializedName("id")
     val id: Int?,
-//    @SerializedName("photographer")
     val photographer: String?,
-//    @SerializedName("src")
     val src: PhotoSource
 )
 

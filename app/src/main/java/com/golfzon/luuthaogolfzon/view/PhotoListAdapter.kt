@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.golfzon.luuthaogolfzon.R
 import com.golfzon.luuthaogolfzon.model.Photo
+import com.golfzon.luuthaogolfzon.utils.loadUrl
 import kotlinx.android.synthetic.main.item_photo.view.*
 
 class PhotoListAdapter(var photos: ArrayList<Photo>) :
     RecyclerView.Adapter<PhotoListAdapter.PhotoViewHolder>() {
 
-    fun updatePhotos(newPhotos: List<Photo>){
+    fun updatePhotos(newPhotos: List<Photo>) {
         photos.clear()
         photos.addAll(newPhotos)
         notifyDataSetChanged()
@@ -32,7 +33,7 @@ class PhotoListAdapter(var photos: ArrayList<Photo>) :
         private val image = view.photo
         fun bind(photo: Photo) {
             author.text = photo.photographer
-//            image.
+            image.loadUrl(photo.src.landscape)
         }
 
     }

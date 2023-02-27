@@ -19,15 +19,11 @@ class ListViewModel : ViewModel() {
     val loading = MutableLiveData<Boolean>()
     val disposable = CompositeDisposable()
 
-    fun refresh() {
-        fetchPhotos()
-    }
-
-    private fun fetchPhotos() {
+    fun fetchPhotos(query: String, perPage: Int, page: Int) {
         loading.value = true
         disposable.add(
             pexelsService
-                .searchPhotos("dog", 15, 1)
+                .searchPhotos(query, perPage, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PhotosResponse>() {

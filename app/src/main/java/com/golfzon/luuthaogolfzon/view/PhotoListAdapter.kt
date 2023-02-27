@@ -12,9 +12,13 @@ import kotlinx.android.synthetic.main.item_photo.view.*
 class PhotoListAdapter(var photos: ArrayList<Photo>) :
     RecyclerView.Adapter<PhotoListAdapter.PhotoViewHolder>() {
 
-    fun updatePhotos(newPhotos: List<Photo>) {
-        photos.clear()
+    fun addPhotos(newPhotos: List<Photo>) {
         photos.addAll(newPhotos)
+        notifyDataSetChanged()
+    }
+
+    fun clearAllData() {
+        photos.clear()
         notifyDataSetChanged()
     }
 

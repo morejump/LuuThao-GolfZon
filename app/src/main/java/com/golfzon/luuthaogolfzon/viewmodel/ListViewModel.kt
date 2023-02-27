@@ -14,16 +14,21 @@ import io.reactivex.schedulers.Schedulers
 class ListViewModel : ViewModel() {
     private val TAG = ListViewModel::class.java.simpleName
     private val pexelsService = PexelsService()
+    private var CURRENT_PAGE_SEARCH = 0
+    private val SIZE_PAGE_SEARCH  = 15
     val photos = MutableLiveData<List<Photo>>()
     val photoLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
     val disposable = CompositeDisposable()
 
-    fun fetchPhotos(query: String, perPage: Int, page: Int) {
+
+
+    fun fetchPhotos(query: String) {
+        CURRENT_PAGE_SEARCH++
         loading.value = true
         disposable.add(
             pexelsService
-                .searchPhotos(query, perPage, page)
+                .searchPhotos(query, SIZE_PAGE_SEARCH, CURRENT_PAGE_SEARCH)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PhotosResponse>() {

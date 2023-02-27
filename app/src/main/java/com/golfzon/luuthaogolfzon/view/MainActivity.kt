@@ -12,31 +12,31 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: ListViewModel
-    private val countriesAdapter = CountryListAdapter(arrayListOf())
+    private val photoListAdapter = PhotoListAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         viewModel.refresh()
-        countriesList.apply {
+        photosList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = countriesAdapter
+            adapter = photoListAdapter
         }
         observeViewModel()
     }
 
     fun observeViewModel() {
-        viewModel.countries.observe(this, Observer { countries ->
-            countries?.let {
-                countriesAdapter.updateCountries(countries)
+        viewModel.photos.observe(this, Observer { photos ->
+            photos?.let {
+                photoListAdapter.updatePhotos(photos)
             }
         })
         viewModel.loading.observe(this, Observer { done ->
             loading_view.visibility = if (done) View.VISIBLE else View.GONE
 
         })
-        viewModel.countryLoadError.observe(this, Observer { isError ->
+        viewModel.photoLoadError.observe(this, Observer { isError ->
             listError.visibility = if (isError) View.VISIBLE else View.GONE
         })
     }

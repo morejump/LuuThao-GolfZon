@@ -4,16 +4,16 @@ import com.golfzon.luuthaogolfzon.di.DaggerAPIComponent
 import io.reactivex.Single
 import javax.inject.Inject
 
-class CountriesService {
+class PexelsService {
 
     @Inject
-    lateinit var api: CountriesAPI
+    lateinit var api: PexelsAPI
 
     init {
         DaggerAPIComponent.create().inject(this)
     }
 
-    fun getCountries(): Single<List<Country>> {
-        return api.getCountries();
+    fun searchPhotos(query: String, perPage: Int, page: Int): Single<PhotosResponse> {
+        return api.searchPhotos(query, perPage, page)
     }
 }

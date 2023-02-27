@@ -9,7 +9,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 31
     defaultConfig {
-        applicationId "com.devtides.countries"
+        applicationId "com.golfzon.luuthaogolfzon"
         minSdkVersion 15
         targetSdkVersion 31
         versionCode 1

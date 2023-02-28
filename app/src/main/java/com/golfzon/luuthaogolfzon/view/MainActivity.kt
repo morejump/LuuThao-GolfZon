@@ -66,14 +66,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     private fun loadMoreData() {
-        Log.i(TAG, "loadMoreData")
+        Log.i(TAG, "Load more data")
         viewModel.fetchPhotos(searchView.query.toString())
         isLoading = false
     }
 
     private fun observeViewModel() {
         viewModel.photos.observe(this, Observer { photos ->
-            Log.i(TAG, "receive a new data with a size: " + photos.size)
+            Log.i(TAG, "Receive a new data with a size: " + photos.size)
             photos?.let {
                 photoListAdapter.addPhotos(photos)
             }

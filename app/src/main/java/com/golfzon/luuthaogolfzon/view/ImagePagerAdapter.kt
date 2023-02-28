@@ -9,17 +9,28 @@ import com.golfzon.luuthaogolfzon.model.Photo
 class ImagePagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private val images: MutableList<Photo>
+    private val photos: MutableList<Photo>
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun getItemCount() = images.size
+    private val pageIds= photos.map { it.hashCode().toLong() }
+
+    override fun getItemCount() = photos.size
 
     override fun createFragment(position: Int): Fragment {
-        return ImageFragment.newInstance(images[position].src.large)
+        return ImageFragment.newInstance(photos[position].src.large)
     }
 
     fun removeImage(position: Int) {
-        images.removeAt(position)
+        photos.removeAt(position)
         notifyItemRemoved(position)
     }
+
+    override fun getItemId(position: Int): Long {
+        return photos[position].hashCode().toLong() // make sure notifyDataSetChanged() works
+    }
+
+    override fun containsItem(itemId: Long): Boolean {
+        return pageIds.contains(itemId)
+    }
+
 }

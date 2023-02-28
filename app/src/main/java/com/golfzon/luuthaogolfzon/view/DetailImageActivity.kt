@@ -15,7 +15,6 @@ class DetailImageActivity : AppCompatActivity() {
 
         val selectedPosition = intent.getIntExtra(MainActivity.POSITION_KEY, 0)
         val photos = intent.getSerializableExtra(MainActivity.PHOTOS_KEY) as ArrayList<Photo>
-        Log.i("DetailImageActivity", "onCreate: " + photos.size)
 
         val adapter = ImagePagerAdapter(supportFragmentManager, lifecycle, photos)
         viewPager.adapter = adapter

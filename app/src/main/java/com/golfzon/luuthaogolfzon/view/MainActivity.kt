@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.golfzon.luuthaogolfzon.R
 import com.golfzon.luuthaogolfzon.utils.onTextChangeObservable
 import com.golfzon.luuthaogolfzon.viewmodel.ListViewModel
-import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers

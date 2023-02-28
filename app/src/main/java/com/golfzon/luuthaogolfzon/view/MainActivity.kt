@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.golfzon.luuthaogolfzon.R
+import com.golfzon.luuthaogolfzon.model.Photo
 import com.golfzon.luuthaogolfzon.utils.onTextChangeObservable
 import com.golfzon.luuthaogolfzon.viewmodel.ListViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     private fun loadMoreData() {
+        Log.i(TAG, "loadMoreData")
         viewModel.fetchPhotos(searchView.query.toString())
         isLoading = false
     }
@@ -96,8 +98,18 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+
             // Handle data from detail image activity
-            Log.i(TAG, "onActivityResult")
+            val selectedPosition = data?.getIntExtra(POSITION_KEY, 0)
+            val photos = data?.getSerializableExtra(PHOTOS_KEY) as ArrayList<Photo>
+
+            // Update data to the recyclerview
+            photoListAdapter.clearAllData()
+            photoListAdapter.addPhotos(photos)
+
+            // Scroll to the last image view in the detail image activity
+            val layoutManager = photosList.layoutManager as LinearLayoutManager
+            selectedPosition?.let { layoutManager.scrollToPositionWithOffset(it, 0) }
         }
     }
 

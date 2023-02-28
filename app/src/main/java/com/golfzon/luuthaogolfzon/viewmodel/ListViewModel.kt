@@ -3,6 +3,7 @@ package com.golfzon.luuthaogolfzon.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.golfzon.luuthaogolfzon.di.DaggerAPIComponent
 import com.golfzon.luuthaogolfzon.model.PexelsService
 import com.golfzon.luuthaogolfzon.model.Photo
 import com.golfzon.luuthaogolfzon.model.PhotosResponse
@@ -10,18 +11,22 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class ListViewModel : ViewModel() {
     private val TAG = ListViewModel::class.java.simpleName
-    private val pexelsService = PexelsService()
+    @Inject
+    lateinit var pexelsService: PexelsService
     private var CURRENT_PAGE_SEARCH = 0
-    private val SIZE_PAGE_SEARCH  = 15
+    private val SIZE_PAGE_SEARCH = 15
     val photos = MutableLiveData<List<Photo>>()
     val photoLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
     val disposable = CompositeDisposable()
 
-
+    init {
+        DaggerAPIComponent.create().inject(this)
+    }
 
     fun fetchPhotos(query: String) {
         CURRENT_PAGE_SEARCH++

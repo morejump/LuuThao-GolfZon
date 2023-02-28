@@ -1,6 +1,7 @@
 package com.golfzon.luuthaogolfzon.di
 
 import com.golfzon.luuthaogolfzon.model.PexelsAPI
+import com.golfzon.luuthaogolfzon.model.PexelsService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -32,5 +33,10 @@ class APIModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(PexelsAPI::class.java)
+    }
+
+    @Provides
+    fun providePexelsService(): PexelsService {
+        return PexelsService()
     }
 }
